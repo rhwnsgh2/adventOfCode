@@ -6,10 +6,10 @@ const OPPONENT = {
     B:"PAPER",
     C:"SCISSOR",
 }
-const ME ={
-    X:"ROCK",
-    Y:"PAPER",
-    Z:"SCISSOR"
+const RESULT ={
+    X:"LOSE",
+    Y:"DRAW",
+    Z:"WIN"
 }
 const SCORE = {
     ROCK : "1",
@@ -35,9 +35,9 @@ const judgementScore = (result) =>{
 const format = (input)=>{
     return input.map((item)=>{
         const splitItem = item.split(' ')
-        return {opponent : OPPONENT[splitItem[0]], me: ME[splitItem[1]]}
+        return {opponent : OPPONENT[splitItem[0]], result: RESULT[splitItem[1]]}
     })
-}//{ opponent: 'ROCK', me: 'ROCK' }
+}//{ opponent: 'ROCK', result: "WIN" }
 
 const judgement = (opponent, me) =>{
     switch(opponent){
@@ -60,8 +60,9 @@ const result = ()=>{
     const formattedInput = format(input)
 
     console.log(formattedInput.reduce((acc, curr) => {
-        const judgeScore = judgementScore(judgement(curr.opponent,curr.me))
-        const chosenScore = getChosenValueScore(curr.me)
+        const judgeScore = judgementScore(curr.result)
+        const me = ["ROCK","SCISSOR","PAPER"].find(value => judgement(curr.opponent, value) === curr.result)
+        const chosenScore = getChosenValueScore(me)
         return acc + judgeScore + chosenScore
     }, 0))
 }
