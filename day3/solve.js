@@ -69,8 +69,8 @@ const secondResult = ()=>{
     const value = inputArray.reduce((prev,curr)=>{
         const charListInFirstArray = splitTextWithChar(curr[0])
         const duplicatedChar = charListInFirstArray.find((char)=>
-            findValueInText(char, curr[1]) &&findValueInText(char, curr[2]
-        ))
+            findValueInText(char, curr[1]) &&findValueInText(char, curr[2])
+        )
 
         return prev + changeCharToValue(duplicatedChar)
     },0)
