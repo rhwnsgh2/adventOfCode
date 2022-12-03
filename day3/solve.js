@@ -56,3 +56,11 @@ const firstResult = ()=>{
 
 firstResult()
 
+const splitInputWithLine = (lineCount = 3)=>{
+    const result = []
+    for(let i=0; i < (input.length / lineCount); i++){
+        result.push(input.slice(lineCount * i, lineCount * i + lineCount))
+    }
+    return result
+}
+splitInputWithLine()
