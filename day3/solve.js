@@ -18,3 +18,11 @@ console.log(changeCharToValue("a") === 1)
 console.log(changeCharToValue("z") === 26)
 console.log(changeCharToValue("A") === 27)
 console.log(changeCharToValue("Z") === 52)
+
+const splitWithLength = (text)=>{
+    const firstValue = text.slice(0, text.length / 2)
+    const secondValue = text.slice( -(text.length / 2))
+    return [firstValue, secondValue]
+}
+
+console.log(splitWithLength("AAABBB")) // ["AAA","BBB"]
