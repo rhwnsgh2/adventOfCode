@@ -38,7 +38,7 @@ const splitTextWithChar = (text) => {
     return text.split('',text.length)
 }
 
-const result = ()=>{
+const firstResult = ()=>{
     const value = input.reduce((prev, curr)=>{
         const splittedArray = splitWithLength(curr);
 
@@ -51,7 +51,8 @@ const result = ()=>{
     }, 0)
 
     console.log(value)
-    
+
 }
 
-result()
+firstResult()
+
