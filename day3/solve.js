@@ -38,4 +38,19 @@ const splitTextWithChar = (text) => {
     return text.split('',text.length)
 }
 
-console.log(splitTextWithChar("TEST") ) // ["T","E","S","T"]
+const result = ()=>{
+    const value = input.reduce((prev, curr)=>{
+        const splittedArray = splitWithLength(curr);
+
+        const charListInFirstArray = splitTextWithChar(splittedArray[0])
+        const duplicatedChar = charListInFirstArray.find((char)=>
+            findValueInText(char, splittedArray[1])
+        )
+
+        return prev + changeCharToValue(duplicatedChar)
+    }, 0)
+
+    console.log(value)
+}
+
+result()
