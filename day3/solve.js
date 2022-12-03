@@ -26,3 +26,16 @@ const splitWithLength = (text)=>{
 }
 
 console.log(splitWithLength("AAABBB")) // ["AAA","BBB"]
+
+const findValueInText = (char, text) => {
+    return text.includes(char)
+}
+
+console.log(findValueInText("A","CCDD") === false)
+console.log(findValueInText("A","CCAA") === true)
+
+const splitTextWithChar = (text) => {
+    return text.split('',text.length)
+}
+
+console.log(splitTextWithChar("TEST") ) // ["T","E","S","T"]
