@@ -6,8 +6,8 @@ const formatInput = ()=>{
          return inputLine.split(',').map((item)=>{
             const splitWithHyphen = item.split('-')
             return { 
-                firstValue: splitWithHyphen[0],
-                lastValue :  splitWithHyphen[1],
+                firstValue: Number(splitWithHyphen[0]),
+                lastValue :  Number(splitWithHyphen[1]),
             }
          })
     })
