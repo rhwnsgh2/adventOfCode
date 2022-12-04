@@ -21,7 +21,19 @@ const formatInput = ()=>{
 } // [ [{short, long}, {short, long}] , ... ]
 
 
-const formattedInput = formatInput()
 
 
-console.log(formattedInput)
+
+const firstSubmit = ()=>{
+    const formattedInput = formatInput()
+    const result = formattedInput.reduce((prev,curr)=>{
+        if(curr[0].firstValue >= curr[1].firstValue && curr[0].lastValue <= curr[1].lastValue){
+            return prev + 1
+        }
+        return prev
+    },0)
+    
+    console.log(result)
+}
+
+firstSubmit()
