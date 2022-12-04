@@ -4,6 +4,7 @@ let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 const sortWithLength = (list)=>{
     return list.sort((a,b)=> (a.lastValue - a.firstValue) - (b.lastValue - b.firstValue))
 }
+
 const formatInput = ()=>{
     const result = input.map((inputLine)=>{
         const formattedList = inputLine.split(',').map((item)=>{
@@ -32,8 +33,28 @@ const firstSubmit = ()=>{
         }
         return prev
     },0)
-    
+
     console.log(result)
 }
 
 firstSubmit()
+
+const secondSubmit = ()=>{
+    const formattedInput = formatInput()
+    const compareWithValue = (value, list)=>{
+        return list.firstValue <= value && value <= list.lastValue
+    }
+    const result = formattedInput.reduce((prev,curr)=>{
+        if(compareWithValue(curr[0].firstValue, curr[1])){
+            return prev + 1
+        }
+        if(compareWithValue(curr[0].lastValue, curr[1])){
+            return prev + 1
+        }
+        return prev
+    },0)
+
+    console.log(result)
+}
+
+secondSubmit()
