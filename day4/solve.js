@@ -14,4 +14,9 @@ const formatInput = ()=>{
     return result
 } // [ [{first, last}, {first, last}] , ... ]
 
-formatInput()
+
+const formattedInput = formatInput()
+
+const sortWithLength = (list)=>{
+    return list.sort((a,b)=> (a.lastValue - a.firstValue) - (b.lastValue - b.firstValue))
+}
