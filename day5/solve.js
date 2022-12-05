@@ -4,10 +4,9 @@ let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 const formattedInput = ()=>{
     const container =containerInput()
     const actions = actionInput()
-    actions.forEach((action )=>{
-        moveAction(action.moveItemCount, action.fromContainer, action.toContainer, container)
-    })
-    console.log(container)
+
+    return { container, actions}
+
 }
 
 const containerInput = ()=>{
@@ -52,4 +51,17 @@ const moveAction = (itemCount, from, to, container)=>{
     }
 }
 
-formattedInput()
+const firstSubmit = () =>{
+    const {container, actions} = formattedInput()
+
+    actions.forEach((action )=>{
+        moveAction(action.moveItemCount, action.fromContainer, action.toContainer, container)
+    })
+
+    Object.keys(container).forEach(key=>{
+        const items = container[key]
+        console.log(items[items.length-1])
+    })
+}
+
+firstSubmit()
