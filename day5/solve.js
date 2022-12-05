@@ -44,7 +44,7 @@ const actionInput = ()=>{
     return result;
 }
 
-const moveAction = (itemCount, from, to, container)=>{
+const moveActionWithOne = (itemCount, from, to, container)=>{
     for(let i=0; i < itemCount; i ++){
         const removeItem = container[from].shift()
         container[to].unshift(removeItem)
@@ -54,7 +54,7 @@ const moveAction = (itemCount, from, to, container)=>{
 const firstSubmit = () =>{
     const {container, actions} = formattedInput()
     actions.forEach((action )=>{
-        moveAction(action.moveItemCount, action.fromContainer, action.toContainer, container)
+        moveActionWithOne(action.moveItemCount, action.fromContainer, action.toContainer, container)
     })
 
     let result = '';
