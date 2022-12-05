@@ -47,21 +47,22 @@ const actionInput = ()=>{
 const moveAction = (itemCount, from, to, container)=>{
     for(let i=0; i < itemCount; i ++){
         const removeItem = container[from].shift()
-        container[to].push(removeItem)
+        container[to].unshift(removeItem)
     }
 }
 
 const firstSubmit = () =>{
     const {container, actions} = formattedInput()
-
     actions.forEach((action )=>{
         moveAction(action.moveItemCount, action.fromContainer, action.toContainer, container)
     })
 
+    let result = '';
     Object.keys(container).forEach(key=>{
         const items = container[key]
-        console.log(items[items.length-1])
+        result += items[0].slice(1,2)
     })
+    console.log(result)
 }
 
 firstSubmit()
