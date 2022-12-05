@@ -77,6 +77,7 @@ const entireMoveAction = (itemCount, from, to, container)=>{
 
 const secondSubmit = ()=>{
     const {container, actions} = formattedInput()
+    
     actions.forEach((action )=>{
         entireMoveAction(action.moveItemCount, action.fromContainer, action.toContainer, container)
     })
