@@ -2,7 +2,9 @@ let fs = require('fs');
 let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
 const formattedInput = ()=>{
-    console.log(containerInput())
+    const container =containerInput()
+    const actions = actionInput()
+
 }
 
 const containerInput = ()=>{
@@ -20,6 +22,23 @@ const containerInput = ()=>{
         }  
     })
     return container
+}
+
+const actionInput = ()=>{
+    const actionInputContainer = input.slice(11, input.length)
+
+    const result = actionInputContainer.map(actionInput => {
+        const splitWithWhiteSpace = actionInput.split(' ')
+        const moveItemCount = splitWithWhiteSpace[1]
+        const fromContainer = splitWithWhiteSpace[3]
+        const toContainer = splitWithWhiteSpace[5]
+        return {
+            moveItemCount,
+            fromContainer,
+            toContainer
+        }
+    })
+    return result;
 }
 
 formattedInput()
