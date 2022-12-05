@@ -44,7 +44,7 @@ const actionInput = ()=>{
     return result;
 }
 
-const moveActionWithOne = (itemCount, from, to, container)=>{
+const singleMoveAction = (itemCount, from, to, container)=>{
     for(let i=0; i < itemCount; i ++){
         const removeItem = container[from].shift()
         container[to].unshift(removeItem)
@@ -54,7 +54,7 @@ const moveActionWithOne = (itemCount, from, to, container)=>{
 const firstSubmit = () =>{
     const {container, actions} = formattedInput()
     actions.forEach((action )=>{
-        moveActionWithOne(action.moveItemCount, action.fromContainer, action.toContainer, container)
+        singleMoveAction(action.moveItemCount, action.fromContainer, action.toContainer, container)
     })
 
     let result = '';
@@ -66,3 +66,27 @@ const firstSubmit = () =>{
 }
 
 firstSubmit()
+
+const entireMoveAction = (itemCount, from, to, container)=>{
+    const items = container[from].slice(0, itemCount)
+
+    container[to].unshift(...items)
+
+    container[from] = container[from].slice(itemCount, container[from].length)
+}
+
+const secondSubmit = ()=>{
+    const {container, actions} = formattedInput()
+    actions.forEach((action )=>{
+        entireMoveAction(action.moveItemCount, action.fromContainer, action.toContainer, container)
+    })
+
+    let result = '';
+    Object.keys(container).forEach(key=>{
+        const items = container[key]
+        result += items[0].slice(1,2)
+    })
+    console.log(result)
+}
+
+secondSubmit()
