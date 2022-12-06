@@ -1,7 +1,7 @@
 let fs = require('fs');
 let input = fs.readFileSync('/dev/stdin').toString();
 
-const MARKER = 4;
+const MARKER = 14;
 
 const isUniqCharacterString = (inputString) =>{
     for(let i=0; i< inputString.length; i++){
