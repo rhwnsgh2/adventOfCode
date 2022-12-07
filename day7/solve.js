@@ -56,9 +56,7 @@ const getCurrentPath = (pathHistory) => {
     return pathHistory[pathHistory.length - 1]
 }
 
-const directoryList = ()=>{
-    const commandList = parseInputToCommandList(input)
-
+const directoryListWithCommandList = (commandList)=>{
     let pathHistory = []
     let directory = {}
     commandList.forEach((command)=>{
@@ -73,3 +71,7 @@ const directoryList = ()=>{
     return directory
 }
 
+const main = ()=>{
+    const commandList = parseInputToCommandList(input)
+    directoryListWithCommandList(commandList)
+}
