@@ -59,11 +59,12 @@ const cdCommand = (currentPath, target) =>{
     return path
 }
 
-const main = ()=>{
+
+
+const firstSubmit = ()=>{
     const directories = parseInputToCommandList(input)
-    Object.keys(directories).forEach(key=>console.log(key))
+    
     const getDirectoryFileSize = (directory) =>{
-        console.log(directory)
         return directory.reduce((prev,curr)=>{
             if(curr.type === "file"){
                 return prev + curr.size
@@ -72,7 +73,7 @@ const main = ()=>{
             }
         }, 0)
     }
-
+    
     const result = Object.keys(directories).reduce((prev,curr)=> { 
         console.log(curr)
         const totalSize = getDirectoryFileSize(directories[curr])
@@ -86,4 +87,33 @@ const main = ()=>{
     console.log(result)
 }
 
-main()
+firstSubmit()
+
+const secondSubmit = ()=>{
+    const directories = parseInputToCommandList(input)
+    
+    const getDirectoryFileSize = (directory) =>{
+        return directory.reduce((prev,curr)=>{
+            if(curr.type === "file"){
+                return prev + curr.size
+            }else if(curr.type === "dir"){
+                return prev + getDirectoryFileSize(directories[curr.name])
+            }
+        }, 0)
+    }
+
+    const totalSize = 70000000
+    const wantSize = 30000000
+    const availableSize = totalSize - getDirectoryFileSize(directories['/'])
+
+    const result = []
+    Object.keys(directories).forEach((directory)=> { 
+        const directorySize = getDirectoryFileSize(directories[directory])
+        if(directorySize > wantSize - availableSize) {
+            result.push(directorySize)
+        }
+    },0)
+    console.log(result.sort((a,b)=> a-b)[0])
+}
+
+secondSubmit()
