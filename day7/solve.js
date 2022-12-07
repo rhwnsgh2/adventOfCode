@@ -36,7 +36,6 @@ const parseInputToCommandList = (rawInput) => {
     return result
 }
 
-console.log(parseInputToCommandList(input))
 
 const cdCommand = (currentPath, target) =>{
     const path = currentPath.slice();
@@ -50,14 +49,27 @@ const cdCommand = (currentPath, target) =>{
     return path
 }
 
-const main = ()=>{
-    let pathHistory = []
-    pathHistory = cdCommand(pathHistory, target)
-
-    const getCurrentPath = (pathHistory) => {
-        if(pathHistory.length === 0){
-            return '/'
-        }
-        return pathHistory[pathHistory.length - 1]
+const getCurrentPath = (pathHistory) => {
+    if(pathHistory.length === 0){
+        return '/'
     }
+    return pathHistory[pathHistory.length - 1]
 }
+
+const directoryList = ()=>{
+    const commandList = parseInputToCommandList(input)
+
+    let pathHistory = []
+    let directory = {}
+    commandList.forEach((command)=>{
+        if(command.type === 'cd'){
+            pathHistory = cdCommand(pathHistory, command.target)
+        }else if(command.type === 'lsResult'){
+            const currentPath = getCurrentPath(pathHistory)
+            directory[currentPath] = command.result
+        }
+    })
+
+    return directory
+}
+
