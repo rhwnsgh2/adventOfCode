@@ -1,7 +1,7 @@
 let fs = require('fs');
 let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
-const parseInput = (rawInput) => {
+const parseInputToCommandList = (rawInput) => {
     const input = rawInput.slice()
 
     const result = []
@@ -16,9 +16,10 @@ const parseInput = (rawInput) => {
 
             if(splitWithWhiteSpace[1] === 'cd') {
                 result.push({type:"cd", target : splitWithWhiteSpace[2]})
-            }else{
-                result.push({type:"ls"})
             }
+            // else{
+            //     result.push({type:"ls"})
+            // }
         }else if(splitWithWhiteSpace[0] === "dir"){
             lsResult.push({
                 type : "dir",
@@ -35,4 +36,21 @@ const parseInput = (rawInput) => {
     return result
 }
 
-console.log(parseInput(input))
+console.log(parseInputToCommandList(input))
+
+const cdCommand = (currentPath, target) =>{
+    const path = currentPath.slice();
+
+    if(target === '..'){
+        path.pop()
+    }else{
+        path.push(target)
+    }
+
+    return path
+}
+
+const main = ()=>{
+    let pathHistory = []
+    pathHistory = cdCommand(pathHistory, target)
+}
