@@ -10,14 +10,14 @@ const parseInput = (rawInput) => {
         const splitWithWhiteSpace = line.split(' ')
         if(splitWithWhiteSpace[0] === '$'){
             if(lsResult.length > 0){
-                result.push(lsResult);
+                result.push({type: "lsResult", result : lsResult});
                 lsResult = []
             }
 
             if(splitWithWhiteSpace[1] === 'cd') {
-                result.push(cdCommand)
+                result.push({type:"cd", target : splitWithWhiteSpace[2]})
             }else{
-                result.push(lsCommand)
+                result.push({type:"ls"})
             }
         }else if(splitWithWhiteSpace[0] === "dir"){
             lsResult.push({
@@ -33,14 +33,6 @@ const parseInput = (rawInput) => {
         }
     })
     return result
-}
-
-const cdCommand = (target)=>{
-    return target
-}
-
-const lsCommand = ()=>{
-
 }
 
 console.log(parseInput(input))
