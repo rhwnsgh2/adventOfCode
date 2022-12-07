@@ -53,4 +53,11 @@ const cdCommand = (currentPath, target) =>{
 const main = ()=>{
     let pathHistory = []
     pathHistory = cdCommand(pathHistory, target)
+
+    const getCurrentPath = (pathHistory) => {
+        if(pathHistory.length === 0){
+            return '/'
+        }
+        return pathHistory[pathHistory.length - 1]
+    }
 }
