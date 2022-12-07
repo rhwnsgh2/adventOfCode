@@ -6,7 +6,7 @@ const parseInputToCommandList = (rawInput) => {
 
     const result = []
     let lsResult = []
-    input.forEach(line => {
+    input.forEach((line, index) => {
         const splitWithWhiteSpace = line.split(' ')
         if(splitWithWhiteSpace[0] === '$'){
             if(lsResult.length > 0){
@@ -32,20 +32,24 @@ const parseInputToCommandList = (rawInput) => {
                 size: Number(splitWithWhiteSpace[0])
             })
         }
+        if(input.length-1 === index){
+            result.push({type: "lsResult", result : lsResult});
+        }
     })
+
     return result
 }
 
 
 const cdCommand = (currentPath, target) =>{
     const path = currentPath.slice();
-
+    
     if(target === '..'){
         path.pop()
     }else{
         path.push(target)
     }
-
+    
     return path
 }
 
@@ -53,12 +57,14 @@ const getCurrentPath = (pathHistory) => {
     if(pathHistory.length === 0){
         return '/'
     }
+
     return pathHistory[pathHistory.length - 1]
 }
 
 const createDirectoryWithCommandList = (commandList)=>{
     let pathHistory = []
     let directory = {}
+
     commandList.forEach((command)=>{
         if(command.type === 'cd'){
             pathHistory = cdCommand(pathHistory, command.target)
@@ -71,7 +77,28 @@ const createDirectoryWithCommandList = (commandList)=>{
     return directory
 }
 
+
 const main = ()=>{
     const commandList = parseInputToCommandList(input)
-    const directory = createDirectoryWithCommandList(commandList)
+    const directories = createDirectoryWithCommandList(commandList)
+
+    const getDirectoryFileSize = (directory) =>{
+        directory.reduce((prev,curr)=>{
+            if(curr.type === "file"){
+                return prev + curr
+            }else if(curr.type === "dir"){
+                return prev + getDirectoryFileSize(directories[curr.name])
+            }
+        }, 0)
+    }
+
+    const result = Object.keys(directories).reduce((prev,curr)=> {
+        return prev + getDirectoryFileSize(directories[curr])
+    },0)
+
+    
+
+    console.log(result)
 }
+
+main()
