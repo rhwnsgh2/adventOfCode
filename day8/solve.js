@@ -13,7 +13,7 @@ const splitListWithElement = (element, list) =>{
 
 const hasEqualOrLargerNumber = (number, list) =>{
     let result = false
-    
+
     list.forEach((item)=>{
         if(number <= item) result =  true 
     })
@@ -21,18 +21,27 @@ const hasEqualOrLargerNumber = (number, list) =>{
     return result
 }
 
+
 const inputList = input.map((line)=>{
     return line.split('').map(Number)
 })
 
-const listCompareFunction = (list)=>{
-    return list.reduce((prev, curr) =>  {
-        const [behindList, forwardList] = splitListWithElement(curr, list)
-        console.log(hasEqualOrLargerNumber(curr, forwardList))
-        if(!hasEqualOrLargerNumber(curr, behindList) || !hasEqualOrLargerNumber(curr, forwardList)) return prev + 1;
-        return prev;
-    }, 0)
+const emptyResultList = inputList.map(()=> false)
+
+const result = ()=>{
+    const input = inputList
+    const emptyList = emptyResultList
+
+    console.log(input)
 }
 
-console.log(listCompareFunction([1,2,3,4,5]))
-// console.log(inputList)
+const getVisibleList = (list)=>{
+    let currentMaxValue = list[0]
+    return list.map((value)=>{
+        if(value >= currentMaxValue){
+            currentMaxValue = value
+            return true
+        } 
+        return false
+    })
+}
