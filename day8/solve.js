@@ -20,7 +20,7 @@ const hasLargerNumber = (number, list) =>{
 }
 
 const inputList = input.map((line)=>{
-    return line.split('')
+    return line.split('').map(Number)
 })
 
 console.log(inputList)
