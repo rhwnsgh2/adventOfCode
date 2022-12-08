@@ -1,10 +1,8 @@
 let fs = require('fs');
 let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
-const splitListWithElement = (element, list) =>{
+const splitListWithIndex = (index, list) =>{
     const copiedList = list.slice()
-    const index = copiedList.indexOf(element)
-
     const forwardList = copiedList.splice(index + 1)
     const behindList = copiedList.slice(0, copiedList.length - 1)
     
@@ -26,22 +24,44 @@ const inputList = input.map((line)=>{
     return line.split('').map(Number)
 })
 
-const emptyResultList = inputList.map(()=> false)
+const emptyResultList = inputList.map((input)=> input.map(()=>false))
 
-const result = ()=>{
+const firstSubmit = ()=>{
     const input = inputList
-    const emptyList = emptyResultList
 
-    console.log(input)
-}
+    const resultList = emptyResultList
 
-const getVisibleList = (list)=>{
-    let currentMaxValue = 0
-    return list.map((value)=>{
-        if(value >= currentMaxValue){
-            currentMaxValue = value
-            return true
-        } 
-        return false
+     input.forEach((horizontalList, yIndex) => {
+        horizontalList.forEach((item,xIndex) => {
+            if(resultList[yIndex][xIndex] !== true){
+                const [horizontalListForward, horizontalListBehind] = splitListWithIndex(xIndex, horizontalList)
+                
+                const verticalList = [];
+                for(let i=0; i< input.length; i++){
+                    verticalList.push(input[i][xIndex])
+                }
+    
+                const [verticalListForward, verticalListBehind] = splitListWithIndex(yIndex, verticalList)
+    
+                const result = [horizontalListForward, horizontalListBehind, verticalListForward, verticalListBehind].reduce((prev, curr) =>{
+                    if(prev === false){
+                        return !hasEqualOrLargerNumber(item, curr)
+                    }
+                    return prev;
+                }, false)
+
+                resultList[yIndex][xIndex] = result
+            }
+        })
     })
+    
+    console.log(resultList.reduce((prev,curr)=>{
+        return prev + curr.reduce((prev, curr) => {
+            if(curr) return prev + 1
+            return prev
+        })
+    },0))
+
 }
+
+firstSubmit()
