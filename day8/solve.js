@@ -36,7 +36,7 @@ const result = ()=>{
 }
 
 const getVisibleList = (list)=>{
-    let currentMaxValue = list[0]
+    let currentMaxValue = 0
     return list.map((value)=>{
         if(value >= currentMaxValue){
             currentMaxValue = value
