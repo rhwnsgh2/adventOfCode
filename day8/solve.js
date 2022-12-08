@@ -10,3 +10,17 @@ const splitListWithElement = (element, list) =>{
     
     return [behindList, forwardList]
 }
+
+const hasLargerNumber = (number, list) =>{
+    list.forEach((item)=>{
+        if(item < number) return true 
+    })
+
+    return false
+}
+
+const inputList = input.map((line)=>{
+    return line.split('')
+})
+
+console.log(inputList)
