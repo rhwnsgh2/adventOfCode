@@ -12,15 +12,27 @@ const splitListWithElement = (element, list) =>{
 }
 
 const hasEqualOrLargerNumber = (number, list) =>{
+    let result = false
+    
     list.forEach((item)=>{
-        if(item <= number) return true 
+        if(number <= item) result =  true 
     })
 
-    return false
+    return result
 }
 
 const inputList = input.map((line)=>{
     return line.split('').map(Number)
 })
 
-console.log(inputList)
+const listCompareFunction = (list)=>{
+    return list.reduce((prev, curr) =>  {
+        const [behindList, forwardList] = splitListWithElement(curr, list)
+        console.log(hasEqualOrLargerNumber(curr, forwardList))
+        if(!hasEqualOrLargerNumber(curr, behindList) || !hasEqualOrLargerNumber(curr, forwardList)) return prev + 1;
+        return prev;
+    }, 0)
+}
+
+console.log(listCompareFunction([1,2,3,4,5]))
+// console.log(inputList)
