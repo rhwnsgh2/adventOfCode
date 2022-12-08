@@ -11,9 +11,9 @@ const splitListWithElement = (element, list) =>{
     return [behindList, forwardList]
 }
 
-const hasLargerNumber = (number, list) =>{
+const hasEqualOrLargerNumber = (number, list) =>{
     list.forEach((item)=>{
-        if(item < number) return true 
+        if(item <= number) return true 
     })
 
     return false
