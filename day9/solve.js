@@ -2,17 +2,17 @@ let fs = require('fs');
 let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
 const moveFunction = {
-    up: function(count){
-        this.y += count;
+    up: function(){
+        this.y += 1;
     },
-    down: function(count){
-        this.y -= count;
+    down: function(){
+        this.y -= 1;
     },
-    left: function(count){
-        this.x -= count;
+    left: function(){
+        this.x -= 1;
     },
-    right: function(count){
-        this.x += count;
+    right: function(){
+        this.x += 1;
     }}
      
 
@@ -25,36 +25,60 @@ const parseInput = (input)=>{
     })
 }
 
-const move = (direction, count, target)=>{
+const move = (direction, target)=>{
     switch(direction){
         case "U":
-            target.up(count)
+            target.up()
             break;
         case "R":
-            target.right(count)
+            target.right()
             break;
         case "D":
-            target.down(count)
+            target.down()
             break;
         case "L":
-            target.left(count)
+            target.left()
             break;
     }
 }
 
 const isJoin = (head, tail)=>{
-    if((head.x - tail.x <= 1) && (head.y - tail.y <= 1)) return true
+    if((Math.abs(head.x - tail.x)  <= 1) && (Math.abs(head.y - tail.y) <= 1)) return true
     return false  
+}
+
+const isSameLine = (head, tail) =>{
+    if(head.x === tail.x || head.y === tail.y) return true
+    return false
+}
+
+const getDirection = (direction, head, tail) => {
+    if(direction === "R" || direction === "L"){
+        return head.y - tail.y > 0 ? "U" : "D" 
+    }else{
+        return head.x - tail.x > 0 ? "R" : "L" 
+    }
 }
 
 const firstResult = ()=>{
     const parsedInput = parseInput(input)
     const head = {x: 0, y:0, ...moveFunction}
     const tail = {x:0, y:0, ...moveFunction}
-
+    const result = new Set()
     parsedInput.forEach(({direction, count}) => {
-        move(direction, count, head)
+        for(let i=0; i < count; i++){
+            move(direction, head)
+            if(!isJoin(head, tail)){
+                move(direction, tail)
+                if(!isSameLine(head, tail)){
+                    move(getDirection(direction, head, tail), tail)
+                }
+                result.add(JSON.stringify({x: tail.x, y: tail.y}))
+                console.log(head.x, head.y, tail.x, tail.y, {direction, count})
+            }
+        }
     })
+    console.log([...result].length)
 }
 
 firstResult()
