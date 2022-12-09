@@ -15,9 +15,7 @@ const moveFunction = {
         this.x += count;
     }}
      
-const head = {x: 0, y:0, ...moveFunction}
 
-const tail = {x:0, y:0, ...moveFunction}
 
 const parseInput = (input)=>{
     return input.map((line)=>{
@@ -44,9 +42,19 @@ const move = (direction, count, target)=>{
     }
 }
 
+const isJoin = (head, tail)=>{
+    if((head.x - tail.x <= 1) && (head.y - tail.y <= 1)) return true
+    return false  
+}
+
 const firstResult = ()=>{
     const parsedInput = parseInput(input)
-    parsedInput.forEach(({direction, count}) => move(direction, count, head))
+    const head = {x: 0, y:0, ...moveFunction}
+    const tail = {x:0, y:0, ...moveFunction}
+
+    parsedInput.forEach(({direction, count}) => {
+        move(direction, count, head)
+    })
 }
 
 firstResult()
