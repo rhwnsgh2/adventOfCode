@@ -47,3 +47,26 @@ const firstSubmit = ()=>{
 }
 
 firstSubmit()
+
+const secondSubmit = () =>{
+    const commands = commandList(input)
+
+    const cycle = [(value)=> value]
+    commands.forEach((command) => executeCommand(command, cycle))
+
+    let consoleString = ''
+    cycle.reduce((prev, curr, index)=> {
+        if(index % 40 === 0){
+            consoleString += '\n'
+        }
+
+        if(curr(prev) <= (index+1) % 40 && (index+1) % 40 <= curr(prev) + 2){  
+            consoleString += '#'
+        }else {
+            consoleString += '.'
+        }
+        return curr(prev)
+    },1)
+    console.log(consoleString)
+}
+secondSubmit()
