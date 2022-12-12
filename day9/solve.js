@@ -81,4 +81,53 @@ const firstResult = ()=>{
     console.log([...result].length)
 }
 
-firstResult()
+// firstResult()
+
+
+const secondSubmit = ()=>{
+    const parsedInput = parseInput(input)
+    const mainArray = []
+    const result = new Set()
+
+    const main = {x: 0, y:0, ...moveFunction}
+    for(let i=0; i < 10; i++){
+        mainArray.push({...main})
+    }
+
+    parsedInput.forEach(({direction, count}) => {
+        for(let i=0; i < count; i++){
+            move(direction, mainArray[0])
+
+            mainArray.reduce((prev,curr) => {
+                if(!isJoin(prev, curr)){
+                    if(!isSameLine(prev, curr)){
+                        let xDirection, yDirection;
+                        yDirection = prev.y - curr.y > 0 ?  "U" : "D";
+                        xDirection = prev.x - curr.x > 0 ?  "R" : "L";
+
+                        move(yDirection, curr)
+                        move(xDirection, curr)
+                    }else {
+                        let d;
+                        if(prev.x === curr.x){
+                            d = prev.y - curr.y > 0 ? "U" : "D"
+                        }else {
+                            d = prev.x - curr.x > 0 ? "R" : "L"
+                        }
+                        move(d, curr)
+                    }
+                }
+                return curr
+            })
+
+            result.add(JSON.stringify({x: mainArray[mainArray.length - 1].x, y: mainArray[mainArray.length - 1].y})) 
+        }
+
+        // if(JSON.stringify(lastArray) !== JSON.stringify(mainArray.length -1)){
+        //     result.add(JSON.stringify({x: mainArray[mainArray.length - 1].x, y: mainArray[mainArray.length - 1].y})) 
+        // }
+    })
+
+    console.log([...result].length)
+}
+secondSubmit()
