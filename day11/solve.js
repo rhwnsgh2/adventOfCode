@@ -80,7 +80,9 @@ const main = ()=>{
             }
         })
     }
-    console.log(monkeyList)
+    const testCountList = monkeyList.map((monkey, index)=>monkey.testCount).sort((a,b) => b - a)
+    console.log(testCountList[0] * testCountList[1])
+
 }
 
 main()
