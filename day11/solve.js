@@ -43,6 +43,7 @@ const makeMonkeyList = (input) => {
                         break;
                     case 3:
                         const value = Number(sliceInput.split(' ')[3])
+                        monkey.value = value
                         monkey.test = (old) => old % value === 0
                         break;
                     case 4:
@@ -63,24 +64,28 @@ const makeMonkeyList = (input) => {
 
 const main = ()=>{
     const monkeyList = makeMonkeyList(input)
-    for(let i=0; i < 20; i++){
+    const divider = monkeyList.reduce((prev,curr)=>{
+        return prev * curr.value
+    }, 1)
+
+    for(let i=0; i < 10000; i++){
         monkeyList.forEach((monkey)=>{
             while(monkey.items.length > 0){
                 const item = monkey.items[0]
                 const operationResult = monkey.operation(item)
-                const floorResult = Math.floor(operationResult / 3)
                 monkey.testCount += 1;
-                if(monkey.test(floorResult)){
-                    monkeyList[monkey.trueActionTarget].items.push(floorResult)
+                if(monkey.test(operationResult % divider)){
+                    monkeyList[monkey.trueActionTarget].items.push(operationResult % divider)
                 }
                 else{
-                    monkeyList[monkey.falseActionTarget].items.push(floorResult)
+                    monkeyList[monkey.falseActionTarget].items.push(operationResult % divider)
                 }
                 monkey.items.shift()
             }
         })
     }
     const testCountList = monkeyList.map((monkey, index)=>monkey.testCount).sort((a,b) => b - a)
+    console.log(testCountList)
     console.log(testCountList[0] * testCountList[1])
 
 }
