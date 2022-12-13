@@ -47,11 +47,11 @@ const makeMonkeyList = (input) => {
                         break;
                     case 4:
                         const trueTarget = Number(sliceInput.split(' ')[4])
-                        monkey.trueAction = (value) => addToList(trueTarget, value)
+                        monkey.trueAction = (element) => monkey[trueTarget].push(element)
                         break;
                     case 5:
                         const falseTarget = Number(sliceInput.split(' ')[4])
-                        monkey.falseAction = (value) => addToList(falseTarget, value)
+                        monkey.falseAction = (element) => monkey[falseTarget].push(element)
                         break;
                 }
             }
