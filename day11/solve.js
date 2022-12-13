@@ -17,7 +17,7 @@ const makeMonkeyList = (input) => {
     const monkeyList = []
     input.forEach((line, index) => {
         if(line.includes('Monkey')){
-            const monkey = {}
+            const monkey = { testCount: 0,}
             for(let i=1; i < 6; i++){
                 const sliceInput = input[index+i].split(":")[1]
                 switch(i){
@@ -47,17 +47,40 @@ const makeMonkeyList = (input) => {
                         break;
                     case 4:
                         const trueTarget = Number(sliceInput.split(' ')[4])
-                        monkey.trueAction = (element) => monkey[trueTarget].push(element)
+                        monkey.trueActionTarget = trueTarget
                         break;
                     case 5:
                         const falseTarget = Number(sliceInput.split(' ')[4])
-                        monkey.falseAction = (element) => monkey[falseTarget].push(element)
+                        monkey.falseActionTarget = falseTarget
                         break;
                 }
             }
-            console.log(monkey)
+            monkeyList.push(monkey)
         }
     })
+    return monkeyList
 }
 
-makeMonkeyList(input)
+const main = ()=>{
+    const monkeyList = makeMonkeyList(input)
+    for(let i=0; i < 20; i++){
+        monkeyList.forEach((monkey)=>{
+            while(monkey.items.length > 0){
+                const item = monkey.items[0]
+                const operationResult = monkey.operation(item)
+                const floorResult = Math.floor(operationResult / 3)
+                monkey.testCount += 1;
+                if(monkey.test(floorResult)){
+                    monkeyList[monkey.trueActionTarget].items.push(floorResult)
+                }
+                else{
+                    monkeyList[monkey.falseActionTarget].items.push(floorResult)
+                }
+                monkey.items.shift()
+            }
+        })
+    }
+    console.log(monkeyList)
+}
+
+main()
